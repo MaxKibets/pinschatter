@@ -1,5 +1,5 @@
 import { AuthFormSchema, FormState } from '../../common/utils/definitions';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 
 export default async function signupAction(state: FormState, formData: FormData) {
   const validatedFields = AuthFormSchema.safeParse({
@@ -16,5 +16,5 @@ export default async function signupAction(state: FormState, formData: FormData)
  
   const { name, email, password } = validatedFields.data
 
-  const hashedPassword = await bcrypt.hash(password, 10)
+  // const hashedPassword = await bcrypt.hash(password, 10)
 }
