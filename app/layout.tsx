@@ -1,8 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
 const roboto = Roboto({weight: ["100", "300", "500", "900"], subsets: ["latin", "cyrillic"] });
+ 
+export const viewport: Viewport = {
+  maximumScale: 1,
+}
 
 export const metadata: Metadata = {
   title: "Pinschatter | barking chat",
