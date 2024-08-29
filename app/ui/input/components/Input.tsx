@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon: React.ComponentType<any>;
 }
 
-export default function Input({icon: Icon, ...props}: InputProps) {
+export default function Input({ icon: Icon, ...props }: InputProps) {
   return (
     <div className="relative">
       <input
@@ -14,4 +14,4 @@ export default function Input({icon: Icon, ...props}: InputProps) {
       <Icon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-stone-500 peer-focus:text-amber-500" />
     </div>
   );
-};
+}

@@ -1,9 +1,10 @@
+import React from "react";
 import PinschatterLogo from "@/app/ui/logo/components/PinschatterLogo";
 
 export default function AuthLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <main className="flex items-center justify-center min-h-screen">
@@ -13,4 +14,4 @@ export default function AuthLayout({
       </div>
     </main>
   );
-};
+}
