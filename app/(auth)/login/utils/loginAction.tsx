@@ -1,4 +1,8 @@
+"use server";
+
+import { signIn } from "@/auth";
 import { AuthFormSchema, FormState } from "../../common/utils/definitions";
+import { AuthError } from "next-auth";
 
 export default async function loginAction(
   state: FormState,
@@ -15,5 +19,18 @@ export default async function loginAction(
     };
   }
 
-  // Call the provider or db to create a user...
+  try {
+    await signIn("credentials", formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { message: "Invalid credentials." };
+        default:
+          return { message: "Something went wrong." };
+      }
+    }
+
+    throw error;
+  }
 }

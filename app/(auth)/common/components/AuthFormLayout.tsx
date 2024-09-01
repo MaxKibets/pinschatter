@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  TagIcon,
   AtSymbolIcon,
   ExclamationCircleIcon,
   KeyIcon,
@@ -43,7 +44,7 @@ export default function AuthFormLayout({
                 Name
               </label>
               <Input
-                icon={AtSymbolIcon}
+                icon={TagIcon}
                 id="name"
                 type="text"
                 name="name"

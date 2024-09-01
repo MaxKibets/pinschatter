@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
+
 export const AuthFormSchema = z.object({
   name: z
     .string()
@@ -11,9 +18,9 @@ export const AuthFormSchema = z.object({
     .min(8, { message: "Be at least 8 characters long" })
     .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
     .regex(/[0-9]/, { message: "Contain at least one number." })
-    .regex(/[^a-zA-Z0-9]/, {
-      message: "Contain at least one special character.",
-    })
+    // .regex(/[^a-zA-Z0-9]/, {
+    //   message: "Contain at least one special character.",
+    // })
     .trim(),
 });
 
