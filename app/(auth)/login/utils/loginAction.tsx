@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth";
 import { AuthFormSchema, FormState } from "../../common/utils/definitions";
+import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 
 export default async function loginAction(
@@ -19,10 +20,14 @@ export default async function loginAction(
     };
   }
 
+  // SPIKE! next-auth doesn't make a redirect after successful login
+  // https://github.com/nextauthjs/next-auth/issues/10016
+  let errorOccurred = false;
   try {
     await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof AuthError) {
+      errorOccurred = true;
       switch (error.type) {
         case "CredentialsSignin":
           return { message: "Invalid credentials." };
@@ -32,5 +37,9 @@ export default async function loginAction(
     }
 
     throw error;
+  } finally {
+    if (!errorOccurred) {
+      redirect("/room");
+    }
   }
 }
