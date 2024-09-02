@@ -7,13 +7,16 @@ import {
   KeyIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import { Button } from "@/app/ui/button/components/Button";
-import Input from "@/app/ui/input/components/Input";
+import { Button, Input } from "@/app/ui";
 import { Errors } from "../utils/definitions";
+import Link from "next/link";
 
 interface AuthFormLayoutInterface {
   title: string;
   buttonText: string;
+  subText: string;
+  linkText: string;
+  linkHref: string;
   withNameField?: boolean;
   formAction: (formData: FormData) => void;
   isPending: boolean;
@@ -24,6 +27,9 @@ interface AuthFormLayoutInterface {
 export default function AuthFormLayout({
   title,
   buttonText,
+  subText,
+  linkText,
+  linkHref,
   withNameField,
   formAction,
   isPending,
@@ -106,9 +112,13 @@ export default function AuthFormLayout({
               </p>
             ))}
         </div>
-        <Button className="mt-4 w-full" aria-disabled={isPending}>
+        <Button
+          icon={ArrowRightIcon}
+          className="mt-4 w-full"
+          aria-disabled={isPending}
+          primary
+        >
           {buttonText}
-          <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div className="flex h-8 items-end space-x-1">
           {message && (
@@ -118,6 +128,15 @@ export default function AuthFormLayout({
             </>
           )}
         </div>
+      </div>
+      <div className="mt-5 text-stone-500 text-center">
+        {subText}{" "}
+        <Link
+          href={linkHref}
+          className="text-stone-200 hover:underline underline-offset-2"
+        >
+          {linkText}
+        </Link>
       </div>
     </form>
   );

@@ -10,12 +10,13 @@ export default function SignupForm() {
     undefined,
   );
 
-  console.log(state);
-
   return (
     <AuthFormLayout
-      title={"Please register to continue"}
-      buttonText={"Register"}
+      title="Please register to continue"
+      buttonText="Register"
+      subText="Already have an account?"
+      linkText="Log in!"
+      linkHref="/signin"
       formAction={formAction}
       isPending={isPending}
       errors={state?.errors}

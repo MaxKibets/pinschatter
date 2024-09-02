@@ -1,12 +1,14 @@
 import React from "react";
 import { signOut } from "@/auth";
-import { Button } from "@/app/ui/button/components/Button";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/app/ui";
+import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
+import Paw from "@/public/Paw";
 
 export default function Room() {
   return (
-    <main>
+    <div>
       <header className="flex p-4">
+        <Paw className="w-10 h-auto" />
         <form
           className="ml-auto"
           action={async () => {
@@ -14,11 +16,9 @@ export default function Room() {
             await signOut({ redirectTo: "/" });
           }}
         >
-          <Button filled={false} type="submit">
-            Sign out <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-          </Button>
+          <Button icon={ArrowRightStartOnRectangleIcon} type="submit" />
         </form>
       </header>
-    </main>
+    </div>
   );
 }

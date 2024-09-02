@@ -2,10 +2,10 @@
 
 import { signIn } from "@/auth";
 import { AuthFormSchema, FormState } from "../../common/utils/definitions";
-import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default async function loginAction(
+export default async function signinAction(
   state: FormState,
   formData: FormData,
 ) {
@@ -17,6 +17,7 @@ export default async function loginAction(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
+      message: "",
     };
   }
 
