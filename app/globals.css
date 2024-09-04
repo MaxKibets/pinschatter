@@ -4,13 +4,14 @@
 
 :root {
   --stone: rgb(28 25 23); /* bg-stone-900 */
-  --white: rgb(231 229 228);
+  --white: #d6d3d1;
   --amber: rgb(180 83 9); /* bg-amber-700 */
 }
 
 body {
   color: var(--white);
   background: var(--stone);
+  font-size: 14px;
 }
 
 @layer utilities {

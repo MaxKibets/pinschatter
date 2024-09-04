@@ -1,24 +1,15 @@
 import React from "react";
-import { signOut } from "@/auth";
-import { Button } from "@/app/ui";
-import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
-import Paw from "@/public/Paw";
+import { Metadata } from "next/types";
+import dynamic from "next/dynamic";
 
-export default function Room() {
-  return (
-    <div>
-      <header className="flex p-4">
-        <Paw className="w-10 h-auto" />
-        <form
-          className="ml-auto"
-          action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/" });
-          }}
-        >
-          <Button icon={ArrowRightStartOnRectangleIcon} type="submit" />
-        </form>
-      </header>
-    </div>
-  );
+const Chat = dynamic(() => import("./containers/Chat"), {
+  ssr: false,
+});
+
+export const metadata: Metadata = {
+  title: "Chat room",
+};
+
+export default function RoomPage() {
+  return <Chat />;
 }

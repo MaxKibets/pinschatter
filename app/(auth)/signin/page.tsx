@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import SigninForm from "./containers/SigninForm";
 
 export const metadata: Metadata = {
-  title: "Sing in page",
+  title: "Sign in page",
 };
 
-export default function SinginPage() {
+export default function SigninPage() {
   return <SigninForm />;
 }

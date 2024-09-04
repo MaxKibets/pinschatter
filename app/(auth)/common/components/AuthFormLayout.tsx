@@ -38,8 +38,8 @@ export default function AuthFormLayout({
 }: AuthFormLayoutInterface) {
   return (
     <form action={formAction}>
-      <div className="flex-1 rounded-lg border border-amber-700 px-6 pb-4 pt-8">
-        <h1 className="mb-3 text-2xl text-stone-200">{title}</h1>
+      <div className="flex-1 rounded-lg border border-stone-600 px-6 pb-4 pt-8">
+        <h1 className="mb-3 text-2xl">{title}</h1>
         <div className="w-full">
           {withNameField && (
             <div>
@@ -133,7 +133,7 @@ export default function AuthFormLayout({
         {subText}{" "}
         <Link
           href={linkHref}
-          className="text-stone-200 hover:underline underline-offset-2"
+          className="text-stone-300 hover:underline underline-offset-2"
         >
           {linkText}
         </Link>
