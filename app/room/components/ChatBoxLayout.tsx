@@ -3,6 +3,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/16/solid";
 import React, {
   Dispatch,
   FormEventHandler,
+  KeyboardEventHandler,
   ReactNode,
   RefObject,
   SetStateAction,
@@ -14,7 +15,7 @@ interface ChatBoxLayoutInterface {
   inputBoxRef: RefObject<null | HTMLTextAreaElement>;
   handleFormSubmission: FormEventHandler<HTMLFormElement>;
   messageText: string;
-  handleKeyUp: Function;
+  handleKeyUp: KeyboardEventHandler<HTMLTextAreaElement>;
   setMessageText: Dispatch<SetStateAction<string>>;
   messageTextIsEmpty: boolean;
 }
