@@ -9,7 +9,7 @@ export default function Chat() {
   const client = new Ably.Realtime({ authUrl: "/api" });
 
   return (
-    <main className="flex border rounded-lg border-stone-600 grow max-w-screen-md w-full m-auto">
+    <main className="flex border rounded-lg border-stone-600 grow max-w-screen-md w-full m-auto overflow-hidden">
       <AblyProvider client={client}>
         <ChannelProvider channelName="pinschatter">
           <div className="p-4 border-r border-stone-600">users</div>

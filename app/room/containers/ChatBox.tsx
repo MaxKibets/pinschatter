@@ -6,21 +6,20 @@ import React, {
   useState,
 } from "react";
 import { useChannel } from "ably/react";
-import { Button } from "@/app/ui";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Message } from "ably";
+import ChatBoxLayout from "../components/ChatBoxLayout";
 
 export default function ChatBox() {
-  const inputBox = useRef<null | HTMLTextAreaElement>(null);
-  const messageEnd = useRef<null | HTMLDivElement>(null);
-  const [messageText, setMessageText] = useState("");
+  const inputBoxRef = useRef<null | HTMLTextAreaElement>(null);
+  const messageEndRef = useRef<null | HTMLDivElement>(null);
+  const [messageText, setMessageText] = useState<string>("");
   const [receivedMessages, setMessages] = useState<Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
   useEffect(() => {
-    messageEnd?.current?.scrollIntoView({ behavior: "smooth" });
-  });
+    messageEndRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [receivedMessages]);
 
   const { channel, ably } = useChannel("pinschatter", (message) => {
     console.log(message);
@@ -31,7 +30,7 @@ export default function ChatBox() {
   const sendChatMessage = (messageText: string) => {
     channel.publish({ name: "chat-message", data: messageText });
     setMessageText("");
-    inputBox?.current?.focus();
+    inputBoxRef?.current?.focus();
   };
 
   const handleFormSubmission = (event: FormEvent<HTMLFormElement>) => {
@@ -48,6 +47,8 @@ export default function ChatBox() {
     event.preventDefault();
   };
 
+  // TODO should be refactored
+  // Create MessageList component that should render the appropriate message component
   const messages = receivedMessages.map((message, index) => (
     <div
       key={index}
@@ -63,27 +64,15 @@ export default function ChatBox() {
   ));
 
   return (
-    <div className="grow flex flex-col">
-      <div className="flex flex-col grow p-2 border-b border-stone-600">
-        {messages}
-        <div ref={messageEnd}></div>
-      </div>
-      <form onSubmit={handleFormSubmission} className="p-2  flex">
-        <textarea
-          ref={inputBox}
-          value={messageText}
-          placeholder="Type a message..."
-          onChange={(e) => setMessageText(e.target.value)}
-          onKeyUp={handleKeyUp}
-          rows={2}
-          className="mr-2 grow outline-none bg-transparent placeholder:text-stone-500 text-sm"
-        ></textarea>
-        <Button
-          icon={PaperAirplaneIcon}
-          type="submit"
-          disabled={messageTextIsEmpty}
-        />
-      </form>
-    </div>
+    <ChatBoxLayout
+      messages={messages}
+      messageEndRef={messageEndRef}
+      inputBoxRef={inputBoxRef}
+      handleFormSubmission={handleFormSubmission}
+      messageText={messageText}
+      handleKeyUp={handleKeyUp}
+      setMessageText={setMessageText}
+      messageTextIsEmpty={messageTextIsEmpty}
+    />
   );
 }

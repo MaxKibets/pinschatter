@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --stone: rgb(28 25 23); /* bg-stone-900 */
+  --stone-900: #1c1917;
+  --stone-600: #57534e;
   --white: #d6d3d1;
-  --amber: rgb(180 83 9); /* bg-amber-700 */
+  --amber-700: #b45309;
 }
 
 body {
   color: var(--white);
-  background: var(--stone);
+  background: var(--stone-900);
   font-size: 14px;
+  scrollbar-color: var(--stone-600) var(--stone-900);
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
 }
 
 @layer utilities {
