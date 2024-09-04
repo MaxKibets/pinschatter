@@ -40,9 +40,10 @@ export default function ChatBox() {
   };
 
   const handleKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.charCode !== 13 || messageTextIsEmpty) {
+    if (event.code !== "Enter" || messageTextIsEmpty) {
       return;
     }
+
     sendChatMessage(messageText);
     event.preventDefault();
   };
