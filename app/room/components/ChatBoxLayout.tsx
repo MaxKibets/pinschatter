@@ -32,7 +32,7 @@ export default function ChatBoxLayout({
 }: ChatBoxLayoutInterface) {
   return (
     <div className="grow flex flex-col">
-      <div className="flex flex-col grow p-2 border-b border-stone-600 overflow-y-scroll h-[calc(100vh-146px)]">
+      <div className="flex flex-col p-2 border-b border-stone-600 overflow-y-auto mt-auto">
         {messages}
         <div ref={messageEndRef}></div>
       </div>
