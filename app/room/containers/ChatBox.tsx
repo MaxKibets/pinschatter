@@ -6,28 +6,45 @@ import React, {
   useState,
 } from "react";
 import { useChannel } from "ably/react";
-import clsx from "clsx";
-import { Message } from "ably";
 import ChatBoxLayout from "../components/ChatBoxLayout";
 import { useSession } from "next-auth/react";
+import { CHANNEL_NAME } from "../utils/channelName";
+import MessagesFactory from "./MessagesFactory";
+import { Message } from "ably";
+
+export interface MessageInterface extends Message {
+  action?: string;
+}
 
 export default function ChatBox() {
   const { data: session } = useSession();
   const inputBoxRef = useRef<null | HTMLTextAreaElement>(null);
   const messageEndRef = useRef<null | HTMLDivElement>(null);
   const [messageText, setMessageText] = useState<string>("");
-  const [receivedMessages, setMessages] = useState<Message[]>([]);
+  const [receivedMessages, setMessages] = useState<MessageInterface[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
+
+  const { channel, ably } = useChannel(CHANNEL_NAME, (message) => {
+    setMessages([...receivedMessages, message]);
+  });
+
+  useEffect(() => {
+    channel.presence.subscribe("enter", (message) => {
+      setMessages([...receivedMessages, message]);
+    });
+
+    channel.presence.subscribe("leave", (message) => {
+      setMessages([...receivedMessages, message]);
+    });
+
+    return () => {
+      channel.presence.unsubscribe();
+    };
+  }, [channel, receivedMessages]);
 
   useEffect(() => {
     messageEndRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [receivedMessages]);
-
-  const { channel, ably } = useChannel("pinschatter", (message) => {
-    console.log(message);
-    const history = receivedMessages.slice(-199);
-    setMessages([...history, message]);
-  });
 
   const sendChatMessage = (messageText: string) => {
     channel.publish({
@@ -55,26 +72,15 @@ export default function ChatBox() {
     event.preventDefault();
   };
 
-  // TODO should be refactored
-  // Create MessageList component that should render the appropriate message component
   const messages = receivedMessages.map((message, index) => (
-    <div
+    <MessagesFactory
       key={index}
-      className={clsx(
-        "border rounded-lg py-2 px-3 mb-2 bg-stone-800 flex flex-col",
-        message.connectionId === ably.connection.id
-          ? "self-end border-amber-700"
-          : "self-start border-stone-600",
-      )}
-    >
-      <div className="text-xs text-stone-600 mt-[-4px]">
-        {message.data.userName}
-      </div>
-      {message.data.message}
-      <div className="text-xs text-stone-600 self-end mb-[-4px]">
-        {new Date(message.timestamp!).toLocaleDateString("en-US")}
-      </div>
-    </div>
+      action={message.action}
+      isMy={message.connectionId === ably.connection.id}
+      userName={message.data.userName}
+      messageText={message.data.message}
+      timestamp={message.timestamp}
+    />
   ));
 
   return (

@@ -3,9 +3,11 @@ import { Metadata } from "next/types";
 import dynamic from "next/dynamic";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { Spinner } from "@/app/ui";
 
 const Chat = dynamic(() => import("./containers/Chat"), {
   ssr: false,
+  loading: () => <Spinner className="self-center grow" />,
 });
 
 export const metadata: Metadata = {

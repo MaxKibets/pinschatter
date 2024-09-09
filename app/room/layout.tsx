@@ -9,7 +9,9 @@ export default function RoomLayout({
   return (
     <div className="p-4 flex flex-col h-screen">
       <ChatHeader />
-      {children}
+      <main className="flex border rounded-lg border-stone-600 grow max-w-screen-md w-full m-auto overflow-hidden">
+        {children}
+      </main>
     </div>
   );
 }
