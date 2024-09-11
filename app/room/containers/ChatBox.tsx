@@ -25,22 +25,22 @@ export default function ChatBox() {
   const messageTextIsEmpty = messageText.trim().length === 0;
 
   const { channel, ably } = useChannel(CHANNEL_NAME, (message) => {
-    setMessages([...receivedMessages, message]);
+    setMessages((receivedMessages) => [...receivedMessages, message]);
   });
 
   useEffect(() => {
     channel.presence.subscribe("enter", (message) => {
-      setMessages([...receivedMessages, message]);
+      setMessages((receivedMessages) => [...receivedMessages, message]);
     });
 
     channel.presence.subscribe("leave", (message) => {
-      setMessages([...receivedMessages, message]);
+      setMessages((receivedMessages) => [...receivedMessages, message]);
     });
 
     return () => {
       channel.presence.unsubscribe();
     };
-  }, [channel, receivedMessages]);
+  }, [channel]);
 
   useEffect(() => {
     messageEndRef?.current?.scrollIntoView({ behavior: "smooth" });
